@@ -5,6 +5,7 @@ var refute = require('./lib/refute.js');
 var watch = require('./lib/watch.js');
 var testRunner = require('./lib/testRunner.js');
 var waitStub = require('./lib/waitStub.js');
+var timeoutPromise = require('./lib/timeoutPromise.js');
 
 var runCalled = false;
 
@@ -19,7 +20,8 @@ module.exports = {
     assert: assert,
     refute: refute,
     sinon: sinon,
-    waitStub: waitStub
+    waitStub: waitStub,
+    timeoutPromise: timeoutPromise
 };
 
 function callWatcher(fn) {
