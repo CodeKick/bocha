@@ -1,6 +1,6 @@
 {
   "name": "bocha",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Bringing the best of Buster.js to Mocha",
   "main": "./index.js",
   "browser": "./browser-entry.js",
