@@ -6,6 +6,7 @@ var watch = require('./lib/watch.js');
 var testRunner = require('./lib/testRunner.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
+var dom = require('./lib/dom.js');
 
 var runCalled = false;
 
@@ -21,7 +22,8 @@ module.exports = {
     refute: refute,
     sinon: sinon,
     waitStub: waitStub,
-    timeoutPromise: timeoutPromise
+    timeoutPromise: timeoutPromise,
+    dom: dom
 };
 
 function callWatcher(fn) {
