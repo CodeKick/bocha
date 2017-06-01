@@ -22,8 +22,7 @@ module.exports = {
     refute: refute,
     sinon: sinon,
     waitStub: waitStub,
-    timeoutPromise: timeoutPromise,
-    dom: dom
+    timeoutPromise: timeoutPromise
 };
 
 function callWatcher(fn) {
