@@ -6,6 +6,7 @@ var bochaUiFactory = require('./lib/bochaUiFactory.js');
 var htmlReporter = require('./lib/reporters/htmlReporter.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
+var dom = require('./lib/dom.js');
 
 var mocha = global.mocha;
 if (!mocha || !mocha.suite || !mocha.suite.emit) {
@@ -27,7 +28,8 @@ module.exports = {
     refute: refute,
     sinon: sinon,
     waitStub: waitStub,
-    timeoutPromise: timeoutPromise
+    timeoutPromise: timeoutPromise,
+    dom: dom
 };
 
 function testCaseWrapper(name, obj) {
