@@ -6,7 +6,6 @@ var watch = require('./lib/watch.js');
 var testRunner = require('./lib/testRunner.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
-var dom = require('./lib/dom.js');
 var defaults = require('./lib/defaults.js');
 
 var runCalled = false;
@@ -24,7 +23,6 @@ module.exports = {
     sinon: sinon,
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
-    dom: dom,
     defaults: defaults.defaults,
     defaultsDeep: defaults.defaultsDeep
 };
