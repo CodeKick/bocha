@@ -1,12 +1,12 @@
 var sinon = require('sinon');
 var testCase = require('./lib/testCase.js');
-var assert = require('./lib/assert.js');
-var refute = require('./lib/refute.js');
+var assert = require('./lib/dom/assert.js');
+var refute = require('./lib/dom/refute.js');
 var bochaUiFactory = require('./lib/bochaUiFactory.js');
 var htmlReporter = require('./lib/reporters/htmlReporter.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
-var dom = require('./lib/dom.js');
+var dom = require('./lib/dom/dom.js');
 var defaults = require('./lib/defaults.js');
 
 var mocha = global.mocha;
