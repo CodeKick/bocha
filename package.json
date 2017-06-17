@@ -29,6 +29,7 @@
     "mocha": "^3.0.2",
     "mocha-teamcity-reporter": "^1.1.1",
     "sinon": "^1.17.5",
+    "sizzle": "^2.3.3",
     "yargs": "^5.0.0"
   }
 }
