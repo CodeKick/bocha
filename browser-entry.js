@@ -7,7 +7,8 @@ var htmlReporter = require('./lib/reporters/htmlReporter.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
 var dom = require('./lib/dom/dom.js');
-var defaults = require('./lib/defaults.js');
+var defaults = require('lodash.defaults');
+var defaultsDeep = require('lodash.defaultsdeep');
 
 var mocha = global.mocha;
 if (!mocha || !mocha.suite || !mocha.suite.emit) {
@@ -31,8 +32,8 @@ module.exports = {
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
     dom: dom,
-    defaults: defaults.defaults,
-    defaultsDeep: defaults.defaultsDeep
+    defaults: defaults,
+    defaultsDeep: defaultsDeep
 };
 
 function testCaseWrapper(name, obj) {

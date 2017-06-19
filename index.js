@@ -6,7 +6,8 @@ var watch = require('./lib/watch.js');
 var testRunner = require('./lib/testRunner.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
-var defaults = require('./lib/defaults.js');
+var defaults = require('lodash.defaults');
+var defaultsDeep = require('lodash.defaultsdeep');
 
 var runCalled = false;
 
@@ -23,8 +24,8 @@ module.exports = {
     sinon: sinon,
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
-    defaults: defaults.defaults,
-    defaultsDeep: defaults.defaultsDeep
+    defaults: defaults,
+    defaultsDeep: defaultsDeep
 };
 
 function callWatcher(fn) {

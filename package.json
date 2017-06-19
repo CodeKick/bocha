@@ -26,6 +26,8 @@
     "chokidar": "^1.6.0",
     "escape-string-regexp": "^1.0.5",
     "glob": "^7.0.6",
+    "lodash.defaults": "^4.2.0",
+    "lodash.defaultsdeep": "^4.6.0",
     "mocha": "^3.0.2",
     "mocha-teamcity-reporter": "^1.1.1",
     "sinon": "^1.17.5",
