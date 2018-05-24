@@ -1,4 +1,5 @@
 var sinon = require('sinon');
+require('./lib/addLegacyMethodsToSinon.js')(sinon);
 var testCase = require('./lib/testCase.js');
 var assert = require('./lib/dom/assert.js');
 var refute = require('./lib/dom/refute.js');
