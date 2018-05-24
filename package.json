@@ -30,7 +30,7 @@
     "lodash.defaultsdeep": "^4.6.0",
     "mocha": "3.5.0",
     "mocha-teamcity-reporter": "^1.1.1",
-    "sinon": "^1.17.5",
+    "sinon": "^5.0.10",
     "sizzle": "^2.3.3",
     "yargs": "^5.0.0"
   }
