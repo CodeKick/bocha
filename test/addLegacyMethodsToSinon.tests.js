@@ -3,7 +3,7 @@ let sinon = bocha.sinon;
 let testCase = bocha.testCase;
 let assert = bocha.assert;
 
-module.exports = testCase('Testing', {
+module.exports = testCase('addLegacyMethodsToSinon', {
     'can wait for spy': function (done) {
         let waitStub = bocha.waitStub;
         let myStub = sinon.spy(() => Promise.resolve());
@@ -22,8 +22,7 @@ module.exports = testCase('Testing', {
 
         assert(true);
     },
-    // In the new verion of sinon stub(obj, 'meth', fn) has been removed, see documentation,
-    'can stub object using stub(obj, "meth", fn)': function () {
+    'can stub object using stub(obj, "meth", fn)': function () { // In the new verion of sinon stub(obj, 'meth', fn) has been removed, see documentation,
         let object = {
             foo() {
                 assert(false);
@@ -53,5 +52,19 @@ module.exports = testCase('Testing', {
         assert.calledWith(stub, sinon.match({
             foo: 'bar',
         }));
+    },
+    'can use calledWith together with an object that is NOT a match object': function () {
+        let stub = sinon.stub();
+
+        stub({ foo: 'bar' });
+
+        assert.calledWith(stub, { foo: 'bar' });
+    },
+    'can assert calledWith null': function () {
+        let stub = sinon.stub();
+
+        stub(null);
+
+        assert.calledWith(stub, null);
     }
 });
