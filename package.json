@@ -1,6 +1,6 @@
 {
   "name": "bocha",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Bringing the best of Buster.js to Mocha",
   "main": "./index.js",
   "browser": "./browser-entry.js",
@@ -28,8 +28,8 @@
     "glob": "^7.0.6",
     "lodash.defaults": "^4.2.0",
     "lodash.defaultsdeep": "^4.6.0",
-    "mocha": "3.5.0",
-    "mocha-teamcity-reporter": "^1.1.1",
+    "mocha": "^5.2.0",
+    "mocha-teamcity-reporter": "^2.4.0",
     "sinon": "^5.0.10",
     "sizzle": "^2.3.3",
     "yargs": "^5.0.0"
