@@ -1,4 +1,4 @@
-let bocha = require('../index.js');
+let bocha = require('../../index.js');
 let sinon = bocha.sinon;
 let testCase = bocha.testCase;
 let assert = bocha.assert;
