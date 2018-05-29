@@ -11,6 +11,69 @@ module.exports = testCase('assert', {
         let error = catchError(() => assert.match(null, 'Hello'));
         assert(error);
     },
+    'calledWith:': {
+        'when calledWith fails should show expected and actual in message': function () {
+            let func = sinon.stub();
+
+            func({ bar: 'foo' });
+
+            let error = catchError(() => {
+                    assert.calledWith(func, {
+                        foo: 'bar'
+                    });
+                }
+            );
+
+            assert(error);
+            assert.equals(error.message, `Wrong arguments in call to stub.
+CALL 1: {
+    "bar": "foo"
+}
+Expected: {
+    "foo": "bar"
+}`);
+        },
+        'when calledWith fails and was called twice should include actual values of all calls in message': function () {
+            let func = sinon.stub();
+
+            func({ bar1: 'foo1' });
+            func({ bar2: 'foo2' });
+
+            let error = catchError(() => {
+                    assert.calledWith(func, {
+                        foo: 'bar'
+                    });
+                }
+            );
+
+            assert(error);
+            assert.equals(error.message, `Wrong arguments in call to stub.
+CALL 1: {
+    "bar1": "foo1"
+}
+CALL 2: {
+    "bar2": "foo2"
+}
+Expected: {
+    "foo": "bar"
+}`);
+        },
+        'when calledWith fails with multiple arguments should list all arguments': function () {
+            let func = sinon.stub();
+
+            func('A', 'D');
+
+            let error = catchError(() => {
+                    assert.calledWith(func, 'A', 'B');
+                }
+            );
+
+            assert(error);
+            assert.equals(error.message, `Wrong arguments in call to stub.
+CALL 1: "A", "D"
+Expected: "A", "B"`);
+        }
+    },
     'when calledWith and stub was never call should give message saying it was never called': function () {
         let func = sinon.stub();
 
