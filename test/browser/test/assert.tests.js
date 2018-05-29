@@ -1,7 +1,6 @@
-let bocha = require('../index.js');
+let bocha = require('../../../browser-entry.js');
 let testCase = bocha.testCase;
 let assert = bocha.assert;
-let sinon = bocha.sinon;
 
 module.exports = testCase('assert', {
     tearDown() {
@@ -18,10 +17,17 @@ module.exports = testCase('assert', {
 
             assert.elementText('#text', 'A B');
         }
+    },
+    'elementExactText:': {
+        'actual is " A  B " and exptected is " A  B " should pass': function () {
+            this.testRoot = createAndRenderTestDom(`<span id="text"> A  B </span>`);
+
+            assert.elementExactText('#text', ` A  B `);
+        }
     }
 });
 
-async function createAndRenderTestDom(contentHtml) {
+function createAndRenderTestDom(contentHtml) {
     let htmlTemplate = document.createElement('template');
     htmlTemplate.innerHTML = '<div id="testDom"/>';
     let testDom = htmlTemplate.content.firstChild;
