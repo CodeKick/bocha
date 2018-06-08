@@ -7,6 +7,7 @@ var watch = require('./lib/watch.js');
 var testRunner = require('./lib/testRunner.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
+var fakeClock = require('./lib/fakeClock.js');
 var defaults = require('lodash.defaults');
 var defaultsDeep = require('lodash.defaultsdeep');
 
@@ -23,6 +24,9 @@ module.exports = {
     assert: assert,
     refute: refute,
     sinon: sinon,
+    stub: sinon.stub,
+    spy: sinon.spy,
+    fakeClock: fakeClock,
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
     defaults: defaults,

@@ -8,6 +8,7 @@ var htmlReporter = require('./lib/reporters/htmlReporter.js');
 var waitStub = require('./lib/waitStub.js');
 var timeoutPromise = require('./lib/timeoutPromise.js');
 var dom = require('./lib/dom/dom.js');
+var fakeClock = require('./lib/fakeClock.js');
 var defaults = require('lodash.defaults');
 var defaultsDeep = require('lodash.defaultsdeep');
 
@@ -30,6 +31,9 @@ module.exports = {
     assert: assert,
     refute: refute,
     sinon: sinon,
+    stub: sinon.stub,
+    spy: sinon.spy,
+    fakeClock: fakeClock,
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
     dom: dom,
