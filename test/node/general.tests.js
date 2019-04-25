@@ -5,8 +5,14 @@ let {
     assert,
     refute,
     timeoutPromise: timeout,
-    fakeClock
+    fakeClock,
+    sinon
 } = require('../../index.js');
+
+let componentToStub = {
+    foo: () => 'bar',
+    bar: () => 'foo'
+};
 
 module.exports = testCase('general', {
     tearDown() {
@@ -62,6 +68,20 @@ module.exports = testCase('general', {
         'does NOT have property from previous test': function () {
             assert.equals(this.shared, 'yes');
             refute(this.foo);
+        }
+    },
+    'restores methods stubbed by sinon': {
+        setUp: function () {
+            sinon.stub(componentToStub, 'bar', function () { return 'override'; });
+        },
+        'uses stub in test that stubs it': function () {
+            sinon.stub(componentToStub, 'foo', function () { return 'override'; });
+            assert.equals(componentToStub.foo(), 'override');
+            assert.equals(componentToStub.bar(), 'override');
+        },
+        'uses restored original method in other test': function () {
+            assert.equals(componentToStub.foo(), 'bar');
+            assert.equals(componentToStub.bar(), 'override');
         }
     }
 });
