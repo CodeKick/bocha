@@ -52,7 +52,6 @@ module.exports = testCase('general', {
     },
     'has empty test context in each test': {
         setUp: function () {
-            console.log('setUp');
             this.shared = 'yes';
         },
         'has property in test that sets it': function () {
