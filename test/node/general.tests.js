@@ -3,6 +3,7 @@ let {
     stub,
     spy,
     assert,
+    refute,
     timeoutPromise: timeout,
     fakeClock
 } = require('../../index.js');
@@ -47,6 +48,21 @@ module.exports = testCase('general', {
             this.clock = fakeClock(0);
 
             assert.equals(Date.now(), 0);
+        }
+    },
+    'has empty test context in each test': {
+        setUp: function () {
+            console.log('setUp');
+            this.shared = 'yes';
+        },
+        'has property in test that sets it': function () {
+            this.foo = 'bar';
+            assert.equals(this.shared, 'yes');
+            assert.equals(this.foo, 'bar');
+        },
+        'does NOT have property from previous test': function () {
+            assert.equals(this.shared, 'yes');
+            refute(this.foo);
         }
     }
 });
