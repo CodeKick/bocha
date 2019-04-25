@@ -11,7 +11,8 @@ let {
 
 let componentToStub = {
     foo: () => 'bar',
-    bar: () => 'foo'
+    bar: () => 'foo',
+    baz: () => 'buzz'
 };
 
 module.exports = testCase('general', {
@@ -73,6 +74,10 @@ module.exports = testCase('general', {
     'restores methods stubbed by sinon': {
         setUp: function () {
             sinon.stub(componentToStub, 'bar', function () { return 'override'; });
+            sinon.stub(componentToStub, 'baz', function () { return 'override'; });
+        },
+        tearDown: function () {
+            componentToStub.baz.restore();
         },
         'uses stub in test that stubs it': function () {
             sinon.stub(componentToStub, 'foo', function () { return 'override'; });
