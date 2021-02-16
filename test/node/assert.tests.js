@@ -11,13 +11,13 @@ module.exports = testCase('assert', {
         let error = catchError(() => {
             assert.equals(NaN, 1);
         });
-        assert.equals(error.message, 'NaN equals 1');
+        assert.match(error.message, 'NaN !== 1');
     },
     '1 !== NaN': function () {
         let error = catchError(() => {
             assert.equals(1, NaN);
         });
-        assert.equals(error.message, '1 equals NaN');
+        assert.match(error.message, '1 !== NaN');
     },
     'null !== hello': function () {
         let error = catchError(() => assert.match(null, 'Hello'));
