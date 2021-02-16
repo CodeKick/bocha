@@ -11,6 +11,8 @@ var dom = require('./lib/dom/dom.js');
 var fakeClock = require('./lib/fakeClock.js');
 var defaults = require('lodash.defaults');
 var defaultsDeep = require('lodash.defaultsdeep');
+var localToUtc = require('./lib/localToUtc');
+var utcToLocal = require('./lib/utcToLocal');
 
 var mocha = global.mocha;
 if (!mocha || !mocha.suite || !mocha.suite.emit) {
@@ -38,7 +40,9 @@ module.exports = {
     timeoutPromise: timeoutPromise,
     dom: dom,
     defaults: defaults,
-    defaultsDeep: defaultsDeep
+    defaultsDeep: defaultsDeep,
+    localToUtc: localToUtc,
+    utcToLocal: utcToLocal
 };
 
 function testCaseWrapper(name, obj) {

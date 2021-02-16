@@ -10,6 +10,8 @@ var timeoutPromise = require('./lib/timeoutPromise.js');
 var fakeClock = require('./lib/fakeClock.js');
 var defaults = require('lodash.defaults');
 var defaultsDeep = require('lodash.defaultsdeep');
+var localToUtc = require('./lib/localToUtc');
+var utcToLocal = require('./lib/utcToLocal');
 
 var runCalled = false;
 
@@ -30,7 +32,9 @@ module.exports = {
     waitStub: waitStub,
     timeoutPromise: timeoutPromise,
     defaults: defaults,
-    defaultsDeep: defaultsDeep
+    defaultsDeep: defaultsDeep,
+    localToUtc: localToUtc,
+    utcToLocal: utcToLocal
 };
 
 function callWatcher(fn) {
