@@ -23,6 +23,17 @@ module.exports = testCase('assert', {
         let error = catchError(() => assert.match(null, 'Hello'));
         assert(error);
     },
+    'defined': {
+        'undefined': function () {
+            let error = catchError(() => {
+                assert.defined(undefined);
+            });
+            assert(error);
+        },
+        'null': function () {
+            assert.defined(null);
+        }
+    },
     'calledWith:': {
         'when calledWith fails should show expected and actual in message': function () {
             let func = sinon.stub();
