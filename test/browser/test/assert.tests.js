@@ -1,8 +1,6 @@
-let bocha = require('../../../browser-entry.js');
-let testCase = bocha.testCase;
-let assert = bocha.assert;
+let { assert, testCase } = require('../../../browser-entry.js');
 
-module.exports = testCase('assert', {
+testCase('assert', {
     tearDown() {
         this.testRoot && this.testRoot.remove();
     },

@@ -7,7 +7,7 @@ let {
     fakeClock
 } = require('../../../browser-entry.js');
 
-module.exports = testCase('general', {
+testCase('general', {
     'can use stub alias': function () {
         let myStub = stub();
 

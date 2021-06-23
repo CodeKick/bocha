@@ -20,7 +20,6 @@ let lastChangedTestFilePath;
 let compiler;
 let lastCompiledTestFilePath;
 let lastCompiledBundleFilePath;
-let lastCompiledExternals;
 
 initWatcher();
 
@@ -83,25 +82,8 @@ function htmlMiddleware(req, res, next) {
 
 function ensureCompilerForTestFilePath(testFilePath) {
     if (testFilePath !== lastCompiledTestFilePath) {
-        let externalsUsed = {
-            jquery: false,
-            knockout: false,
-            moment: false,
-            vue: false,
-            vuex: false,
-        };
         let config = getWebpackConfig(testFilePath);
         compiler = webpack(config);
-        compiler.plugin('normal-module-factory', nmf => {
-            nmf.plugin('before-resolve', (result, callback) => {
-                let request = result && result.request;
-                if (request && request in externalsUsed) {
-                    externalsUsed[request] = true;
-                }
-                callback(null, result);
-            });
-        });
-        lastCompiledExternals = externalsUsed;
         lastCompiledTestFilePath = null;
         lastCompiledBundleFilePath = null;
     }
@@ -113,7 +95,6 @@ function getPageContent({ req }) {
     let testRelativeUrl = path.join(path.dirname(htmlRelativeUrl), baseName + '.tests.js');
     let isAutoTest = req.autotest;
 
-    let externals = lastCompiledExternals;
     return [
         '<!DOCTYPE HTML>',
         '<html>',
@@ -150,14 +131,14 @@ function getPageContent({ req }) {
         '<script src="/webpackify/' + testRelativeUrl + '"></script>',
         `<script>
             (function () { 
-                var runner = mocha.run();
-                var failed = false;
-                runner.on('fail', function () { 
+                let runner = mocha.run();
+                let failed = false;
+                runner.on('fail', () => { 
                     failed = true; 
                     document.body.removeAttribute('style');
                     document.body.classList.add('body--fail');
                 });
-                runner.on('end', function () {
+                runner.on('end', () => {
                     document.body.removeAttribute('style');
                     if (!failed) {
                         document.body.classList.add('body--success');
@@ -263,7 +244,6 @@ function getRelativeUrlForTestFile(testFile) {
 }
 
 function testScriptMiddleware(req, res, next) {
-
     if (req.url.indexOf(WEBPACKIFY_PREFIX) === 0) {
         let relativeUrl = req.url.substring(WEBPACKIFY_PREFIX.length);
         let testFilePath = path.join(testRootPath, relativeUrl);
@@ -298,21 +278,8 @@ function getWebpackConfig(filePath) {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: /(node_modules|\/client\/lib)/,
+                    exclude: /node_modules/,
                     use: [{ loader: 'babel-loader' }]
-                },
-                {
-                    test: /\.jade$/,
-                    exclude: /node_modules/,
-                    use: [{ loader: 'jade-loader' }]
-                },
-                {
-                    test: /\.vue$/,
-                    exclude: /node_modules/,
-                    use: [
-                        { loader: 'babel-loader' },
-                        { loader: 'vue-loader', options: { esModule: false } }
-                    ]
                 }
             ]
         },
