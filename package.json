@@ -3,7 +3,7 @@
   "version": "1.12.1",
   "description": "Bringing the best of Buster.js to Mocha",
   "main": "./index.js",
-  "browser": "./browser-entry.js",
+  "browser": "./browser.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

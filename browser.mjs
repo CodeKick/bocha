@@ -1,4 +1,4 @@
-import bocha from './browser-entry.js';
+import bocha from './browser.js';
 
 export const testCase = bocha.testCase;
 export const assert = bocha.assert;
