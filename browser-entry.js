@@ -13,6 +13,8 @@ let defaults = require('lodash.defaults');
 let defaultsDeep = require('lodash.defaultsdeep');
 let localToUtc = require('./lib/localToUtc');
 let utcToLocal = require('./lib/utcToLocal');
+let catchError = require('./lib/catchError.js');
+let catchErrorAsync = require('./lib/catchErrorAsync.js');
 
 let mocha = global.mocha;
 if (!mocha || !mocha.suite || !mocha.suite.emit) {
@@ -43,7 +45,9 @@ module.exports = {
     defaults,
     defaultsDeep,
     localToUtc,
-    utcToLocal
+    utcToLocal,
+    catchError,
+    catchErrorAsync
 };
 
 function testCaseWrapper(name, obj) {

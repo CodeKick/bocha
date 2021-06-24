@@ -16,3 +16,5 @@ export const localToUtc = bocha.localToUtc;
 export const utcToLocal = bocha.utcToLocal;
 export const click = bocha.dom.clickAndTick;
 export const setValue = bocha.dom.setValueAndTick;
+export const catchError = bocha.catchError;
+export const catchErrorAsync = bocha.catchErrorAsync;
