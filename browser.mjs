@@ -25,3 +25,4 @@ export const keydownWithModifiers = bocha.dom.keydownAndTickWithModifiers;
 export const mouseup = bocha.dom.mouseupAndTick;
 export const pasteIntoInput = bocha.dom.pasteIntoInputAndTick;
 export const htmlToElement = bocha.dom.htmlToElement;
+export const $ = (selector => document.querySelector(selector));
