@@ -5,7 +5,7 @@ let {
     assert,
     timeoutPromise: timeout,
     fakeClock
-} = require('../../../browser.js');
+} = require('../../../browser-internal.js');
 
 testCase('general', {
     'can use stub alias': function () {

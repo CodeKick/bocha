@@ -1,4 +1,4 @@
-let { assert, testCase } = require('../../../browser.js');
+let { assert, testCase } = require('../../../browser-internal.js');
 
 testCase('assert', {
     tearDown() {
