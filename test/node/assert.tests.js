@@ -93,7 +93,7 @@ Expected: {
 
             assert(error);
             assert.equals(error.message, `Wrong arguments in call to stub.
-CALL 1: "A", "D"
+CALL 1: "\\"A\\"", "\\"D\\""
 Expected: "A", "B"`);
         }
     },
