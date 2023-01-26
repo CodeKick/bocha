@@ -6,6 +6,7 @@ let bochaRootPath = path.join(__dirname, '../../');
 let testRootPath = path.join(bochaRootPath, './test');
 let chokidar = require('chokidar');
 let webpack = require('webpack');
+let NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const REFRESH_POLLER_CONTENT = fs.readFileSync(path.join(__dirname, 'refreshPoller.js'));
 const HTML_PREFIX = '/test-html/';
@@ -124,7 +125,6 @@ function getPageContent({ req }) {
         '</head>',
         '<body>',
         '<div id="mocha"></div>',
-        '<script src="/node_modules/babel-polyfill/dist/polyfill.min.js"></script>',
         '<script src="/node_modules/sinon/pkg/sinon.js"></script>',
         '<script src="/node_modules/mocha/mocha.js"></script>',
         isAutoTest ? `<script>(function() { var lastChangeTime = ${lastChangeTime}; ${REFRESH_POLLER_CONTENT} })();</script>` : '',
@@ -261,6 +261,9 @@ function testScriptMiddleware(req, res, next) {
 }
 
 function logError(text) {
+    if (typeof text !== 'string') {
+        text = JSON.stringify(text, null, 4);
+    }
     console.error(new Date().toISOString() + ': ' + text);
 }
 
@@ -274,15 +277,6 @@ function getWebpackConfig(filePath) {
         entry: {
             [filename]: filePath
         },
-        module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    exclude: /node_modules/,
-                    use: [{ loader: 'babel-loader' }]
-                }
-            ]
-        },
         resolve: {
             modules: [
                 path.join(__dirname, '../..', 'node_modules')
@@ -295,7 +289,11 @@ function getWebpackConfig(filePath) {
         stats: 'errors-only',
         output: {
             path: require('os').tmpdir(),
-            filename: filename
-        }
+            filename,
+            publicPath: '/'
+        },
+        plugins: [
+            new NodePolyfillPlugin(),
+        ]
     };
 }
