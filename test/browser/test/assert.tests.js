@@ -18,10 +18,15 @@ testCase('assert', {
     },
     'elementExactText:': {
         'actual is " A  B " and exptected is " A  B " should pass': function () {
-            this.testRoot = createAndRenderTestDom(`<span id="text"> A  B </span>`);
+            this.testRoot = createAndRenderTestDom('<span id="text"> A  B </span>');
 
             assert.elementExactText('#text', ` A  B `);
         }
+    },
+    'elementStyle': function () {
+        this.testRoot = createAndRenderTestDom('<div id="some-div" style="display: none"/>');
+
+        assert.elementStyle('#some-div', 'display', 'none');
     }
 });
 
