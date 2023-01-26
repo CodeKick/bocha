@@ -32,9 +32,9 @@ module.exports = testCase('general', {
     },
     'fakeClock:': {
         'can fake timer with ISO timestamp as first argument': async function () {
-            fakeClock('2010-01-01T00:00:00Z');
+            let clock = fakeClock('2010-01-01T00:00:00Z');
 
-            await timeout(1000 * 60 * 60);
+            await timeout(clock, 1000 * 60 * 60);
 
             assert.equals(Date.now(), Date.parse('2010-01-01T01:00:00Z'));
         },
