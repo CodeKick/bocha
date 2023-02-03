@@ -1,11 +1,11 @@
-let {
+import {
     testCase,
     stub,
     spy,
     assert,
-    timeoutPromise: timeout,
+    timeout,
     fakeClock
-} = require('../../../browser-internal.js');
+} from '../../../browser.js';
 
 testCase('general', {
     'can use stub alias': function () {

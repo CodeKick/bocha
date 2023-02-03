@@ -1,46 +1,42 @@
-let sinon = require('sinon');
-require('./lib/addLegacyMethodsToSinon.js')(sinon);
-let testCase = require('./lib/testCase.js');
-let assert = require('./lib/assert.js');
-let refute = require('./lib/refute.js');
-let watch = require('./lib/watch.js');
-let testRunner = require('./lib/testRunner.js');
-let waitStub = require('./lib/waitStub.js');
-let timeoutPromise = require('./lib/timeoutPromise.js');
-let fakeClock = require('./lib/fakeClock.js');
-let defaults = require('lodash.defaults');
-let defaultsDeep = require('lodash.defaultsdeep');
-let localToUtc = require('./lib/localToUtc.js');
-let utcToLocal = require('./lib/utcToLocal.js');
-let catchError = require('./lib/catchError.js');
-let catchErrorAsync = require('./lib/catchErrorAsync.js');
+import _sinon from 'sinon';
+import addLegacyMethodsToSinon from './lib/addLegacyMethodsToSinon.js';
+
+addLegacyMethodsToSinon(_sinon);
+
+import _watch from './lib/watch.js';
+import {
+    runNow,
+    runOnce as _runOnce,
+    runOnceTeamcity as _runOnceTeamcity,
+    runTestCase as _runTestCase,
+
+} from './lib/testRunner.js';
+
+export {
+    setDefaultTimeout,
+    useSpecReporter
+} from './lib/testRunner.js';
+export { default as testCase } from './lib/testCase.js';
+export { default as assert } from './lib/assert.js';
+export { default as refute } from './lib/refute.js';
+export { default as waitStub } from './lib/waitStub.js';
+export { default as timeout } from './lib/timeoutPromise.js';
+export { default as fakeClock } from './lib/fakeClock.js';
+export { default as defaults } from 'lodash.defaults';
+export { default as defaultsDeep } from 'lodash.defaultsdeep';
+export { default as localToUtc } from './lib/localToUtc.js';
+export { default as utcToLocal } from './lib/utcToLocal.js';
+export { default as catchError } from './lib/catchError.js';
+export { default as catchErrorAsync } from './lib/catchErrorAsync.js';
+export const sinon = _sinon;
+export const watch = callWatcher(_watch);
+export const runOnce = callWatcher(_runOnce);
+export const runOnceTeamcity = callWatcher(_runOnceTeamcity);
+export const runTestCase = callWatcher(_runTestCase);
+export const stub = sinon.stub;
+export const spy = sinon.spy;
 
 let runCalled = false;
-
-module.exports = {
-    runOnce: callWatcher(testRunner.runOnce),
-    runOnceTeamcity: callWatcher(testRunner.runOnceTeamcity),
-    runTestCase: callWatcher(testRunner.runTestCase),
-    setDefaultTimeout: testRunner.setDefaultTimeout,
-    useSpecReporter: testRunner.useSpecReporter,
-    watch: callWatcher(watch),
-    testCase,
-    assert,
-    refute,
-    sinon,
-    stub: sinon.stub,
-    spy: sinon.spy,
-    fakeClock,
-    waitStub,
-    timeoutPromise,
-    timeout: timeoutPromise,
-    defaults,
-    defaultsDeep,
-    localToUtc,
-    utcToLocal,
-    catchError,
-    catchErrorAsync
-};
 
 function callWatcher(fn) {
     return function () {
@@ -49,9 +45,10 @@ function callWatcher(fn) {
     };
 }
 
-setTimeout(function () {
+setTimeout(() => {
     let fileToRun = process.argv[1];
-    if (!runCalled && fileToRun && (fileToRun.includes('.js') || fileToRun.includes('.mjs')) ) {
-        testRunner.runNow(fileToRun);
+    if (!runCalled && fileToRun && (fileToRun.includes('.js') || fileToRun.includes('.mjs'))) {
+        runNow(fileToRun)
+            .catch(err => setTimeout(() => { throw err; }));
     }
 });

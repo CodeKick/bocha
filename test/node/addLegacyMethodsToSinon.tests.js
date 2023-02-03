@@ -1,11 +1,7 @@
-let bocha = require('../../index.js');
-let sinon = bocha.sinon;
-let testCase = bocha.testCase;
-let assert = bocha.assert;
+import { testCase, assert, sinon, waitStub } from '../../index.js';
 
-module.exports = testCase('addLegacyMethodsToSinon', {
+export default testCase('addLegacyMethodsToSinon', {
     'can wait for spy': function (done) {
-        let waitStub = bocha.waitStub;
         let myStub = sinon.spy(() => Promise.resolve());
         setTimeout(myStub);
 
@@ -14,7 +10,6 @@ module.exports = testCase('addLegacyMethodsToSinon', {
         assert(true);
     },
     'can wait for stub': function (done) {
-        let waitStub = bocha.waitStub;
         let myStub = sinon.stub();
         setTimeout(myStub);
 

@@ -1,4 +1,4 @@
-let { assert, testCase } = require('../../../browser-internal.js');
+import { assert, testCase } from '../../../browser.js';
 
 testCase('assert', {
     tearDown() {

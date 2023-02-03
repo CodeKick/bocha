@@ -1,12 +1,16 @@
-let find = require('find');
-let path = require('path');
-let fs = require('fs');
-let express = require('express');
+import find from 'find';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+import express from 'express';
+import chokidar from 'chokidar';
+import webpack from 'webpack';
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
+import { URL } from 'url';
+
+let __dirname = new URL('.', import.meta.url).pathname;
 let bochaRootPath = path.join(__dirname, '../../');
 let testRootPath = path.join(bochaRootPath, './test');
-let chokidar = require('chokidar');
-let webpack = require('webpack');
-let NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const REFRESH_POLLER_CONTENT = fs.readFileSync(path.join(__dirname, 'refreshPoller.js'));
 const HTML_PREFIX = '/test-html/';
@@ -70,7 +74,7 @@ function htmlMiddleware(req, res, next) {
             }
 
             lastCompiledTestFilePath = testFilePath;
-            lastCompiledBundleFilePath = path.join(require('os').tmpdir(), path.basename(testFilePath));
+            lastCompiledBundleFilePath = path.join(os.tmpdir(), path.basename(testFilePath));
 
             let content = getPageContent({ req });
             res.send(content);
@@ -288,7 +292,7 @@ function getWebpackConfig(filePath) {
         },
         stats: 'errors-only',
         output: {
-            path: require('os').tmpdir(),
+            path: os.tmpdir(),
             filename,
             publicPath: '/'
         },
