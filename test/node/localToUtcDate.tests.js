@@ -1,7 +1,7 @@
-let { assert, testCase } = require('../../index.js');
-let localToUtcDate = require('../../lib/localToUtcDate.js');
+import { assert, testCase } from '../../index.js';
+import localToUtcDate from '../../lib/localToUtcDate.js';
 
-module.exports = testCase('localToUtc', {
+export default testCase('localToUtc', {
     '2022-12-31 12:34': function () {
         let date = localToUtcDate('2022-12-31 12:34');
         assert.equals(date.getFullYear(), 2022);

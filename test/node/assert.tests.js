@@ -1,9 +1,6 @@
-let bocha = require('../../index.js');
-let testCase = bocha.testCase;
-let assert = bocha.assert;
-let sinon = bocha.sinon;
+import { testCase, assert, sinon, catchError } from '../../index.js';
 
-module.exports = testCase('assert', {
+export default testCase('assert', {
     'NaN === NaN': function () {
         assert.equals(NaN, NaN);
     },
@@ -154,15 +151,5 @@ Expected: "A", "B"`);
             let error = catchError(() => assert.startsWith([3, 2, 1], [1, 2]));
             assert(error);
         }
-    },
-
+    }
 });
-
-function catchError(fn) {
-    try {
-        fn();
-    }
-    catch (err) {
-        return err;
-    }
-}

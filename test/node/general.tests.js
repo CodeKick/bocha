@@ -1,13 +1,13 @@
-let {
+import {
     testCase,
     stub,
     spy,
     assert,
     refute,
-    timeoutPromise: timeout,
+    timeout,
     fakeClock,
     sinon
-} = require('../../index.js');
+} from '../../index.js';
 
 let componentToStub = {
     foo: () => 'bar',
@@ -15,7 +15,7 @@ let componentToStub = {
     baz: () => 'buzz'
 };
 
-module.exports = testCase('general', {
+export default testCase('general', {
     'can use stub alias': function () {
         let myStub = stub();
 

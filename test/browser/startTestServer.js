@@ -1,12 +1,16 @@
-let find = require('find');
-let path = require('path');
-let fs = require('fs');
-let express = require('express');
+import find from 'find';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+import express from 'express';
+import chokidar from 'chokidar';
+import webpack from 'webpack';
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
+import { URL } from 'url';
+
+let __dirname = new URL('.', import.meta.url).pathname;
 let bochaRootPath = path.join(__dirname, '../../');
 let testRootPath = path.join(bochaRootPath, './test');
-let chokidar = require('chokidar');
-let webpack = require('webpack');
-let NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const REFRESH_POLLER_CONTENT = fs.readFileSync(path.join(__dirname, 'refreshPoller.js'));
 const HTML_PREFIX = '/test-html/';
@@ -40,7 +44,7 @@ console.log(`Listening on port ${PORT}`);
 process.stdout.write('\x1b]0;Client Test Server\x07');
 
 function lastChangeMiddleware(req, res, next) {
-    if (req.url.indexOf(LAST_CHANGE_PREFIX) === 0) {
+    if (req.url.startsWith(LAST_CHANGE_PREFIX)) {
         res.json(lastChangeTime);
     }
     else {
@@ -49,7 +53,7 @@ function lastChangeMiddleware(req, res, next) {
 }
 
 function htmlMiddleware(req, res, next) {
-    if (req.url.indexOf(HTML_PREFIX) === 0) {
+    if (req.url.startsWith(HTML_PREFIX)) {
         let start = Date.now();
         let relativeUrl = req.url.substring(HTML_PREFIX.length);
         let testFilePath = path.join(testRootPath, relativeUrl + '.tests.js');
@@ -70,7 +74,7 @@ function htmlMiddleware(req, res, next) {
             }
 
             lastCompiledTestFilePath = testFilePath;
-            lastCompiledBundleFilePath = path.join(require('os').tmpdir(), path.basename(testFilePath));
+            lastCompiledBundleFilePath = path.join(os.tmpdir(), path.basename(testFilePath));
 
             let content = getPageContent({ req });
             res.send(content);
@@ -151,7 +155,7 @@ function getPageContent({ req }) {
 }
 
 function autotestMiddleware(req, res, next) {
-    if (req.url.indexOf('/autotest') === 0) {
+    if (req.url.startsWith('/autotest')) {
         if (!lastChangedTestFilePath) {
             res.send(`
                 <html>
@@ -188,14 +192,13 @@ function initWatcher() {
 }
 
 function testScriptQueryMiddleware(req, res, next) {
-    console.log(QUERY_PREFIX);
-    if (req.url.indexOf(QUERY_PREFIX) === 0) {
+    if (req.url.startsWith(QUERY_PREFIX)) {
         let query = req.url.substr(QUERY_PREFIX.length).toLowerCase();
 
         find.file(/\.tests\.js$/, testRootPath, files => {
             let startMatches = files.filter(f => {
                 let fileName = f.toLowerCase().split('/').slice(-1)[0];
-                return fileName.indexOf(query) === 0;
+                return fileName.startsWith(query);
             });
             let insideMatches = files.filter(f => {
                 let fileName = f.toLowerCase().split('/').slice(-1)[0];
@@ -244,7 +247,7 @@ function getRelativeUrlForTestFile(testFile) {
 }
 
 function testScriptMiddleware(req, res, next) {
-    if (req.url.indexOf(WEBPACKIFY_PREFIX) === 0) {
+    if (req.url.startsWith(WEBPACKIFY_PREFIX)) {
         let relativeUrl = req.url.substring(WEBPACKIFY_PREFIX.length);
         let testFilePath = path.join(testRootPath, relativeUrl);
 
@@ -288,7 +291,7 @@ function getWebpackConfig(filePath) {
         },
         stats: 'errors-only',
         output: {
-            path: require('os').tmpdir(),
+            path: os.tmpdir(),
             filename,
             publicPath: '/'
         },
