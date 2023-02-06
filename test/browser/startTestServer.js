@@ -44,7 +44,7 @@ console.log(`Listening on port ${PORT}`);
 process.stdout.write('\x1b]0;Client Test Server\x07');
 
 function lastChangeMiddleware(req, res, next) {
-    if (req.url.indexOf(LAST_CHANGE_PREFIX) === 0) {
+    if (req.url.startsWith(LAST_CHANGE_PREFIX)) {
         res.json(lastChangeTime);
     }
     else {
@@ -53,7 +53,7 @@ function lastChangeMiddleware(req, res, next) {
 }
 
 function htmlMiddleware(req, res, next) {
-    if (req.url.indexOf(HTML_PREFIX) === 0) {
+    if (req.url.startsWith(HTML_PREFIX)) {
         let start = Date.now();
         let relativeUrl = req.url.substring(HTML_PREFIX.length);
         let testFilePath = path.join(testRootPath, relativeUrl + '.tests.js');
@@ -155,7 +155,7 @@ function getPageContent({ req }) {
 }
 
 function autotestMiddleware(req, res, next) {
-    if (req.url.indexOf('/autotest') === 0) {
+    if (req.url.startsWith('/autotest')) {
         if (!lastChangedTestFilePath) {
             res.send(`
                 <html>
@@ -192,14 +192,13 @@ function initWatcher() {
 }
 
 function testScriptQueryMiddleware(req, res, next) {
-    console.log(QUERY_PREFIX);
-    if (req.url.indexOf(QUERY_PREFIX) === 0) {
+    if (req.url.startsWith(QUERY_PREFIX)) {
         let query = req.url.substr(QUERY_PREFIX.length).toLowerCase();
 
         find.file(/\.tests\.js$/, testRootPath, files => {
             let startMatches = files.filter(f => {
                 let fileName = f.toLowerCase().split('/').slice(-1)[0];
-                return fileName.indexOf(query) === 0;
+                return fileName.startsWith(query);
             });
             let insideMatches = files.filter(f => {
                 let fileName = f.toLowerCase().split('/').slice(-1)[0];
@@ -248,7 +247,7 @@ function getRelativeUrlForTestFile(testFile) {
 }
 
 function testScriptMiddleware(req, res, next) {
-    if (req.url.indexOf(WEBPACKIFY_PREFIX) === 0) {
+    if (req.url.startsWith(WEBPACKIFY_PREFIX)) {
         let relativeUrl = req.url.substring(WEBPACKIFY_PREFIX.length);
         let testFilePath = path.join(testRootPath, relativeUrl);
 
