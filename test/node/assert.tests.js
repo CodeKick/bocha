@@ -84,13 +84,12 @@ Expected: {
             func('A', 'D');
 
             let error = catchError(() => {
-                    assert.calledWith(func, 'A', 'B');
-                }
-            );
+                assert.calledWith(func, 'A', 'B');
+            });
 
             assert(error);
             assert.equals(error.message, `Wrong arguments in call to stub.
-CALL 1: "\\"A\\"", "\\"D\\""
+CALL 1: "A", "D"
 Expected: "A", "B"`);
         }
     },
