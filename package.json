@@ -1,6 +1,6 @@
 {
   "name": "bocha",
-  "version": "4.1.2",
+  "version": "4.1.4",
   "description": "Bringing the best of Buster.js to Mocha",
   "main": "./index.js",
   "browser": "./browser.mjs",
@@ -32,7 +32,7 @@
     "mocha-teamcity-reporter": "^4.2.0",
     "ms": "^2.1.3",
     "sinon": "^11.1.2",
-    "sizzle": "^2.3.9",
+    "sizzle": "2.3.6",
     "yargs": "^5.0.0"
   },
   "devDependencies": {
