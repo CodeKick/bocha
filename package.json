@@ -1,6 +1,6 @@
 {
   "name": "bocha",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Bringing the best of Buster.js to Mocha",
   "main": "./index.js",
   "browser": "./browser.mjs",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "chokidar": "^3.5.3",
-    "diff": "^5.1.0",
+    "diff": "5.0.0",
     "escape-string-regexp": "^1.0.5",
     "glob": "^8.1.0",
     "lodash.defaults": "^4.2.0",
