@@ -108,24 +108,57 @@ function getPageContent({ req }) {
         '<title>' + htmlRelativeUrl + '</title>',
         '<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />',
         `<style>
-                html {                    
-                    height: 100%;
-                }
-                body {                    
-                    min-height: 300px;
-                }
+            html {
+                height: 100%;
+            }
+            body {
+                min-height: 300px;
+            }
+            .body--fail {
+                background: #ffd7d7;
+            }
+            .body--success {
+                background: #dfffdf;
+            }
+            body > :not([id="mocha"]) {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            }
+            #mocha {
+                padding-bottom: 10px;
+            }
+            #mocha-report {
+                background: #FFF;
+                padding: 10px 10px 20px 10px !important;
+                border-radius: 10px;
+            }
+            #mocha-stats {
+                background: #FFF;
+                padding: 5px !important;
+                border-radius: 5px;
+                border: 1px solid var(--mocha-box-shadow-color);
+            }
+            .errorDiff-added {
+                color: green;
+            }
+            .errorDiff-removed {
+                color: var(--mocha-test-fail-color);
+            }
+            @media (prefers-color-scheme: dark) {
+                #mocha-stats,
                 #mocha-report {
-                    background: #FFF;
-                    padding: 10px 10px 20px 10px !important;
-                    border-radius: 10px;
+                    background: var(--mocha-bg-color);
                 }
-                .body--fail {
-                    background: #ffd7d7;
+                
+                .errorDiff-added {
+                    color: lightgreen;
                 }
-                .body--success {
-                    background: #dfffdf;
-                }
-             </style>`,
+            }
+         </style>`,
         '</head>',
         '<body>',
         '<div id="mocha"></div>',
