@@ -27,6 +27,19 @@ testCase('assert', {
         this.testRoot = createAndRenderTestDom('<div id="some-div" style="display: none"/>');
 
         assert.elementStyle('#some-div', 'display', 'none');
+    },
+    'elementIsFocused': {
+        'focused': function () {
+            this.testRoot = createAndRenderTestDom('<button id="myButton"/>');
+            document.querySelector('#myButton').focus();
+
+            assert.elementIsFocused('#myButton');
+        },
+        'NOT focused': function () {
+            this.testRoot = createAndRenderTestDom('<button id="myButton"/>');
+
+            assert.exception(() => assert.elementIsFocused('#myButton'));
+        }
     }
 });
 
