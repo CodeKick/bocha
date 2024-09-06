@@ -329,7 +329,9 @@ function getWebpackConfig(filePath) {
             publicPath: '/'
         },
         plugins: [
-            new NodePolyfillPlugin(),
+            new NodePolyfillPlugin({
+                additionalAliases: ['process']
+            }),
         ]
     };
 }
