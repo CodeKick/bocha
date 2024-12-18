@@ -164,6 +164,7 @@ function getPageContent({ req }) {
         '<div id="mocha"></div>',
         '<script src="/node_modules/sinon/pkg/sinon.js"></script>',
         '<script src="/node_modules/mocha/mocha.js"></script>',
+        '<script>window.process = Mocha.process;</script>',
         isAutoTest ? `<script>(function() { var lastChangeTime = ${lastChangeTime}; ${REFRESH_POLLER_CONTENT} })();</script>` : '',
         '<script src="/webpackify/' + testRelativeUrl + '"></script>',
         `<script>
@@ -329,9 +330,7 @@ function getWebpackConfig(filePath) {
             publicPath: '/'
         },
         plugins: [
-            new NodePolyfillPlugin({
-                additionalAliases: ['process']
-            }),
+            new NodePolyfillPlugin()
         ]
     };
 }
