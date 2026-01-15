@@ -356,6 +356,11 @@ function getWebpackConfig(filePath) {
             sinon: 'sinon',
         },
         stats: 'errors-only',
+        plugins: [
+            new webpack.NormalModuleReplacementPlugin(/^node:/, (resource) => {
+                resource.request = resource.request.replace(/^node:/, '');
+            })
+        ],
         output: {
             path: os.tmpdir(),
             filename,
