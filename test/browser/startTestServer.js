@@ -5,7 +5,6 @@ import os from 'os';
 import express from 'express';
 import chokidar from 'chokidar';
 import webpack from 'webpack';
-import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 import { URL } from 'url';
 
 let __dirname = new URL('.', import.meta.url).pathname;
@@ -159,6 +158,36 @@ function getPageContent({ req }) {
                 }
             }
          </style>`,
+        `<script>
+            if (!window.Buffer) {
+                class Buffer extends Uint8Array {
+                    static from(input, encoding = 'utf-8') {
+                        if (typeof input === 'string') {
+                            return Buffer._fromString(input, encoding);
+                        }
+                        if (Array.isArray(input) || input instanceof ArrayBuffer) {
+                            return new Buffer(input);
+                        }
+                        throw new TypeError('Unsupported input type');
+                    }
+
+                    static _fromString(string, encoding) {
+                        const encoder = new TextEncoder(encoding);
+                        return new Buffer(encoder.encode(string));
+                    }
+
+                    static isBuffer(obj) {
+                        return obj instanceof Buffer;
+                    }
+
+                    toString(encoding = 'utf-8') {
+                        const decoder = new TextDecoder(encoding);
+                        return decoder.decode(this);
+                    }
+                }
+                window.Buffer = Buffer;
+            }
+        </script>`,
         '</head>',
         '<body>',
         '<div id="mocha"></div>',
@@ -311,6 +340,7 @@ function log(text) {
 function getWebpackConfig(filePath) {
     let filename = path.basename(filePath);
     return {
+        mode: 'development',
         entry: {
             [filename]: filePath
         },
@@ -320,7 +350,9 @@ function getWebpackConfig(filePath) {
             ]
         },
         externals: {
-            mocha: 'mocha',
+            mocha: {
+                root: 'mocha'
+            },
             sinon: 'sinon',
         },
         stats: 'errors-only',
@@ -328,9 +360,6 @@ function getWebpackConfig(filePath) {
             path: os.tmpdir(),
             filename,
             publicPath: '/'
-        },
-        plugins: [
-            new NodePolyfillPlugin()
-        ]
+        }
     };
 }
