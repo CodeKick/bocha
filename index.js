@@ -45,10 +45,14 @@ function callWatcher(fn) {
     };
 }
 
-setTimeout(() => {
+setTimeout(async () => {
     let fileToRun = process.argv[1];
     if (!runCalled && fileToRun && (fileToRun.includes('.js') || fileToRun.includes('.mjs'))) {
-        runNow(fileToRun)
-            .catch(err => setTimeout(() => { throw err; }));
+        try {
+            await runNow(fileToRun);
+        }
+        catch (err) {
+            setTimeout(() => { throw err; })
+        }
     }
 });
